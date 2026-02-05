@@ -26,28 +26,34 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping()
-    public ResponseEntity<Page<RoleResponse>> getAllRole(Pageable pageable){
+    public ResponseEntity<Page<RoleResponse>> getAllRole(Pageable pageable) {
 
         return ResponseEntity.ok(roleService.getAllRole(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleResponse> getRoleById(@PathVariable int id){
+    public ResponseEntity<RoleResponse> getRoleById(@PathVariable int id) {
 
         return new ResponseEntity<>(roleService.getRoleById(id), HttpStatus.OK);
 
     }
 
+    @GetMapping("name/{name}")
+    public ResponseEntity<RoleResponse> getRoleByName(@PathVariable String name) {
+
+        return new ResponseEntity<>(roleService.getRoleByRolename(name), HttpStatus.OK);
+
+    }
+
     @PostMapping
-    public ResponseEntity<RoleResponse> createRole (@Valid @RequestBody CreateRoleRequest createRoleRequest){
+    public ResponseEntity<RoleResponse> createRole(@Valid @RequestBody CreateRoleRequest createRoleRequest) {
 
         RoleResponse createNewRole = roleService.createRole(createRoleRequest);
 
         // return ResponseEntity.ok(createNewRole);
         // return ResponseEntity.ok(createNewRole);
 
-
         return new ResponseEntity<>(createNewRole, HttpStatus.CREATED);
     }
-    
+
 }
