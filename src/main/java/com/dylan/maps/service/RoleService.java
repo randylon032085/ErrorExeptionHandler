@@ -23,27 +23,24 @@ public class RoleService {
     private RoleMapstruct roleMapstruct;
 
     @Transactional(readOnly = true)
-    public Page<RoleResponse> getAllRole(Pageable pageable){
+    public Page<RoleResponse> getAllRole(Pageable pageable) {
 
         return roleRepositories.findAll(pageable).map(roleMapstruct::toDto);
     }
 
-
     @Transactional
-    public RoleResponse getRoleById(int id){
+    public RoleResponse getRoleById(int id) {
 
-        Role role = roleRepositories.findById(id).orElseThrow(()-> new RoleNotFound("Role not found: " + id));
+        Role role = roleRepositories.findById(id).orElseThrow(() -> new RoleNotFound("Role not found: " + id));
 
         return roleMapstruct.toDto(role);
-        
+
     }
 
     @Transactional
-    public RoleResponse createRole (CreateRoleRequest createRoleRequest){
-     
-       
+    public RoleResponse createRole(CreateRoleRequest createRoleRequest) {
 
-        Role role  = roleMapstruct.toEntity(createRoleRequest);
+        Role role = roleMapstruct.toEntity(createRoleRequest);
 
         // role.setName("it");
 
@@ -51,15 +48,15 @@ public class RoleService {
 
         return roleMapstruct.toDto(saveRole);
 
-
     }
 
     @Transactional
-    public RoleResponse getRoleByRolename (String rolename){
+    public RoleResponse getRoleByRolename(String rolename) {
 
-        Role role = roleRepositories.findByRolename(rolename).orElseThrow(()-> RoleNotFound("Role name not found " + rolename));
-
+        Role role = roleRepositories.findByname(rolename)
+                .orElseThrow(() -> new RoleNotFound("Role not found: " + rolename));
         return roleMapstruct.toDto(role);
+
     }
-    
+
 }

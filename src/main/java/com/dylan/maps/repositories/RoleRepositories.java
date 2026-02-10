@@ -8,6 +8,6 @@ import com.dylan.maps.model.Role;
 
 public interface RoleRepositories extends JpaRepository<Role, Integer> {
 
-    Optional<Role> findByRolename (String rolename);
-    
+    Optional<Role> findByname(String rolename);
+
 }
